@@ -1,0 +1,32 @@
+--- 
+coreos: 
+  etcd: 
+    addr: "$private_ipv4:4001"
+    peer-addr: "$private_ipv4:7001"
+  units: 
+    - 
+      command: start
+      name: etcd.service
+    - 
+      command: start
+      name: fleet.service
+    - 
+      content: |
+          [Match]
+          Name=ens3
+          
+          [Network]
+          Address=192.168.0.21/24
+          Gateway=192.168.0.1
+          DNS=8.8.8.8
+      name: static.network
+hostname: myhostname
+users: 
+  - 
+    name: core
+    ssh-authorized-keys: 
+      - "ssh-rsa AAABAE086pnG4RHDgEIQouXUpovmWYH3fpUIbyX9Wxl4qMj+tTka3l28FaSfMFfd9P5AdHYf8Te+0/BPc92CMeJ63b2CsF4+7gCwpVGg2JrN/3zittnQJ0kz0ODeMWKxsR5qAb/cbT56QbndO5khtt714bhniumwkda7nkb7C68Pw7SIDZfMB55fPSXRhNy59V3aAPo1R+XGBSq8rnguLPUXgMevvTu4+Q31dsp74XIF3On3E8vcN4PG7hh16FHQjTfAl9U2J7l7vUFE00skaO4jW8CA4pI9hlDxLg8x4STJtcpMG9SFHAA1QN3YZTbb/HWkczeAhVypCkpzZCY/h5mo7I0AAACBALgePYPRy+aTZESPhf/4uuC2QSItCRfQa1OZMrmN1um6UP/IRiGG65iCIP5fekXp4e6hzzsO0CMzyCpqxqsq3aqKUCn6qt1ejoUor0NPFP8FfDQVZnw41oqyntN1CgIt7lNrJPyLcxqfOSIyLC4rpZU59etdPvDhfX4zVqo0v607AAAAgQC0nWCcr/AHPlg7Mb1tpM/5kDa3YNOOf0SigwC3vluSmZhfdsQjsPvfneSvPss73bJ1DtsJbe1en/zZm+RCIBPmbcO/pw81tPSXGzTBiZ4JbKj4c2GI0cMxiyw4LOC7qZ64Ezxho76rKfsfyvT3L+wPtQ6l89YAktlFlMhb8nmh6QAAAIBJnEs0W8L4gMPWDzVL1Nkmr9JuiRwZRzWu78n471kqWEhUaHnm5/RAljSHhkfDz3L92jEGY4t1MkBo9WPI01voZ/Wu4rQ2vboJAyL4zxav6DH/K1dKVFY+Sg0hYqazd2hore1tMaMduROGwYVXvieAx0iajOTxl8P4GzLWev0Gtw=="
+  - 
+    groups: 
+      - sudo
+      - docker
